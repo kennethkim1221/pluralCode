@@ -1,0 +1,9 @@
+.crop {
+  overflow: hidden;
+}
+div {
+  cursor: pointer;
+  border-style: solid;
+  border-width: 0.5px;
+}
+

@@ -1,0 +1,84 @@
+<div class="card">
+    <div class='card-header'>
+        <!-- This is interpolation binding -->
+       {{pageTitle}}
+    </div>
+    <br>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-2">Filter by:</div>
+            <div class="col-md-4">
+                <!-- 2-way binding. Bind both the action and the property -->
+                <input type="text" [(ngModel)]='listFilter' />
+            </div>
+        </div>
+        <div class="row">
+            <div class='col-md-6'>
+                <h4>Filtered by: {{listFilter}} </h4>
+            </div>
+        </div>
+      
+        <div class='table-responsive'>
+            <table class='table' *ngIf='products && products.length'>
+              <thead>
+                <tr>
+                  <th>
+                    <!-- Event binding. Bind click action (more in Mozzila web) to toggleImage method-->
+                    <button class='btn btn-primary' (click)="toggleImage()">
+                        {{showImage? "Hide" : "Show"}} Image
+                    </button>
+                  </th>
+                  <th>Product</th>
+                  <th>Code</th>
+                  <th>Available</th>
+                  <th>Price</th>
+                  <th>5 Star Rating</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor='let product of filteredProducts'>
+
+                    <td>
+                        <!-- Property binding. Bind a property of an element 'src' -->
+                        <!-- to the value of a template expression -->
+                        
+                        <img *ngIf="showImage" 
+                            src= {{product.imageUrl}} 
+                            [title]='product.dexter' 
+                            [style.width.px]='imageWidth'
+                            [style.margin.px]='imageMargin'>
+                    </td>
+                    <td>
+                        <a [routerLink]="['/products', product.productId]">
+                            {{ product.productName }}
+                        </a>
+                    </td>
+                    <td>{{ product.productCode | lowercase | convertToSpaces: '-' }}</td>
+                    <td>{{ product.releaseDate }}</td>
+                    <td>{{ product.price | currency: 'USD' : 'symbol' : '1.2-2' }}</td>
+                    <!-- Send data from container to the nester/child component using property biding -->
+                    <td>
+                        <!-- 
+                            Property Binding ([rating]='product.starRating') use this to pass data tot the nested
+                            component. Any property of the nested component that is decorated with the @Input()
+                            decorator can be used as binding target
+                            
+                            Event Binding ((ratingClicked)='onRatingClicked($event)'>). The container will listen to an event named ratingClicked 
+                            (minsan pwede generic like 'click' see mozilla for more) 
+                            and then will call on the method named onRatingClicked()
+                            $event contains any info associated with the event 
+                            Use Event Binding to respond to events from the nested component. Any event(emiter) that is 
+                            decorated with the Output() decorator can be used as the binding target. Use $event
+                            to access the event payload passed from the nested component
+                        -->
+                        <pm-star 
+                            [rating]='product.starRating'
+                            (ratingClicked)='onRatingClicked($event)'>
+                        </pm-star>
+                    </td>
+                </tr>
+              </tbody>
+            </table>  
+        </div>
+    </div>
+</div>
