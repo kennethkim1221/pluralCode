@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'pm-root',
   //templateUrl: './app.component.html',
-  //the router-outlet is the place where Angular wil display the template/page after being re-routed
+  //the router-outlet is the place where Angular will display the template/page after being re-routed
   template: `
     <nav class='navbar navbar-expand navbar-light bg-light'>
       <a class='navbar-brand'>{{pageTitle}}</a>
